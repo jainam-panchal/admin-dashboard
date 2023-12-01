@@ -220,8 +220,8 @@ export default function Table({ empData, setEmpData }) {
                                 )
                             else {
 
-                                let highLightedStyles = "bg-white border-b text-gray-600 bg-blue-200 border-b"
-                                let styles = "bg-white border-b text-gray-600 bg-white border-b"
+                                let highLightedStyles = " border-b text-gray-600 bg-blue-200 border-b"
+                                let styles = "border-b text-gray-600 border-b"
 
                                 return (
                                     <tr key={emp.id} className={selectedRows.includes(emp.id) ? highLightedStyles : styles}>
