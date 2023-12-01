@@ -118,7 +118,7 @@ export default function Table({ empData, setEmpData }) {
 
             </div>
             <table id="dashboard-table" className=" w-full text-sm text-left rtl:text-right text-gray-500">
-                <thead id="dashboard-table-head" className="dashboard-table-head text-xs text-gray-700 uppercase bg-gray-50">
+                <thead id="dashboard-table-head" className="dashboard-table-head text-xs text-gray-950 uppercase bg-gray-50">
                     <tr>
                         <th className="w-1/12">
                             <div id="header-checkbox" className=" flex justify-center items-center">
@@ -162,7 +162,7 @@ export default function Table({ empData, setEmpData }) {
                             // IF EDITING ON CURRENT COLUMN
                             if (emp.id == editOnId)
                                 return (
-                                    <tr key={emp.id} className={` border-b bg-blue-200`}>
+                                    <tr key={emp.id} className="border-b bg-blue-200 ">
                                         <td className="w-1/12">
 
                                             {/* Selection checkbox  */}
@@ -219,8 +219,12 @@ export default function Table({ empData, setEmpData }) {
                                     </tr>
                                 )
                             else {
+
+                                let highLightedStyles = "bg-white border-b text-gray-600 bg-blue-200 border-b"
+                                let styles = "bg-white border-b text-gray-600 bg-white border-b"
+
                                 return (
-                                    <tr key={emp.id} className={`bg-white border-b ${selectedRows.includes(emp.id) ? 'bg-blue-200' : ''}`}>
+                                    <tr key={emp.id} className={selectedRows.includes(emp.id) ? highLightedStyles : styles}>
                                         <td>
                                             <div className="flex justify-center items-center">
                                                 <input
@@ -241,7 +245,7 @@ export default function Table({ empData, setEmpData }) {
                                         <td className="px-2 font-medium font-center">
                                             {emp.id}
                                         </td>
-                                        <td scope="row" className="px-6 py-4 font-medium text-gray-600  ">
+                                        <td scope="row" className="px-6 py-4 font-medium  ">
                                             {emp.name}
                                         </td>
                                         <td className="px-6 font-medium py-4">
@@ -311,7 +315,7 @@ export default function Table({ empData, setEmpData }) {
             </div>
 
 
-        </div>
+        </div >
 
     )
 }
