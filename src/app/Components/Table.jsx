@@ -58,6 +58,14 @@ export default function Table({ empData, setEmpData }) {
 
     const handleEditClick = (id) => {
         setEditOnId(id)
+        setSelectedRows(prevRows => {
+            if (!prevRows.includes(id))
+                return [...prevRows, id]
+            else if (!prevRows.length) {
+                return []
+            }
+            return prevRows
+        });
     }
 
     const handleDeleteClick = (id) => {
@@ -69,6 +77,12 @@ export default function Table({ empData, setEmpData }) {
 
             return true
         })
+
+        setSelectedRows(prevRows => {
+            const newRows = prevRows.filter(pre => pre.id == id)
+            return newRows
+        });
+
         setEmpData(updatedData)
     }
 
@@ -103,7 +117,6 @@ export default function Table({ empData, setEmpData }) {
         setCurrentPage((oldPage) => Math.max(oldPage - 1, 1));
     }
 
-
     const handleMultipleDelete = () => {
         let updatedData = empData.filter(emp => {
             if (selectedRows.includes(emp.id)) {
@@ -118,6 +131,7 @@ export default function Table({ empData, setEmpData }) {
     return (
         <div className="h-max custom-font relative overflow-x-auto shadow-md sm:rounded-lg">
 
+            {/* Confirmtion Modal  */}
             {isModalOpen && (
                 <Modal
                     title={
@@ -136,28 +150,31 @@ export default function Table({ empData, setEmpData }) {
             )}
 
 
-            {/* Searchbox */}
             <div className="mb-2 text-sm font-medium text-gray-900 flex justify-between px-3 py-2 gap-3">
+
+                {/* Searchbox */}
                 <input
                     type="text"
                     placeholder="Search"
                     value={searchTerm}
                     onChange={(e) => setSearchTerm(e.target.value)}
-                    className="searchbar block w-full px-3 py-3 ps-10 text-gray-900 border border-gray-200 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500"
+                    className="searchbar block w-full shadow-md px-3 py-3 ps-10 text-gray-900 border border-gray-200 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500"
                 />
 
-                {/* Clear Searcbox Button  */}
-                {/* <button onClick={() => setSearchTerm('')} type="submit" className="button-clear text-white  bottom-2.5 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2">Clear</button> */}
-
+                {/* Delete Selected Rows  */}
                 <div className="footer-info flex justify-center items-center">
-                    <button onClick={handleDeleteSelectedClick} className="inline-flex w-full justify-center rounded-md bg-red-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-500 sm:ml-3 sm:w-auto">Delete Selected</button>
+                    <button onClick={handleDeleteSelectedClick} className="inline-flex w-full justify-center rounded-md bg-red-600 px-3 py-2 text-xs font-semibold text-white shadow-md  hover:bg-red-500 sm:ml-3 sm:w-auto">Delete Selected</button>
                 </div>
 
             </div>
 
+
+            {/* Table Content  */}
             <div className="overflow-x-auto">
                 <table id="dashboard-table" className=" px-2 border mx-auto text-left  rtl:text-right text-gray-500 table-auto w-[98%]">
-                    <thead id="dashboard-table-head" className="dashboard-table-head text-xs text-gray-950 uppercase bg-gray-50">
+
+                    {/* Table Head  */}
+                    <thead id="dashboard-table-head" className="dashboard-table-head shadow-sm text-xs text-gray-950 uppercase bg-gray-50">
                         <tr>
                             {/* Select all checkbox */}
                             <th className="w-1/12">
@@ -172,6 +189,7 @@ export default function Table({ empData, setEmpData }) {
                                                 setSelectedRows([]);
                                             }
                                         }}
+                                        checked={selectedRows.length == 0 ? false : 'undefined'}
                                     />
                                 </div>
                             </th>
@@ -197,6 +215,8 @@ export default function Table({ empData, setEmpData }) {
 
                         </tr>
                     </thead>
+
+                    {/* Table Body  */}
                     <tbody className="dashboard-table-body">
                         {
 
@@ -218,6 +238,7 @@ export default function Table({ empData, setEmpData }) {
                                                             if (e.target.checked) {
                                                                 setSelectedRows(prevRows => [...prevRows, emp.id]);
                                                             } else {
+                                                                handleCancelClick()
                                                                 setSelectedRows(prevRows => prevRows.filter(id => id !== emp.id));
                                                             }
                                                         }}
@@ -253,10 +274,10 @@ export default function Table({ empData, setEmpData }) {
                                             <td className="flex justify-center gap-4 px-6 py-4 text-center">
 
                                                 {/* SAVE BUTTON */}
-                                                <a href="#" onClick={() => handleSaveClick(emp.id)} className="button-save font-medium  text-blue-600  hover:underline"><FontAwesomeIcon className="border border-gray-1000 p-1 rounded-md" icon={faSave} /></a>
+                                                <a onClick={() => handleSaveClick(emp.id)} className="button-save font-medium  text-blue-600  hover:underline"><FontAwesomeIcon className="border border-gray-1000 p-1 rounded-md" icon={faSave} /></a>
 
                                                 {/* CANCEL BUTTON */}
-                                                <a href="#" onClick={handleCancelClick} className="button-cancel font-medium text-red-600  hover:underline"><FontAwesomeIcon className="border border-gray-1000 p-1 rounded-md items-center" icon={faTimes} /></a>
+                                                <a onClick={handleCancelClick} className="button-cancel font-medium text-red-600  hover:underline"><FontAwesomeIcon className="border border-gray-1000 p-1 rounded-md items-center" icon={faTimes} /></a>
 
                                             </td>
                                         </tr>
@@ -300,10 +321,10 @@ export default function Table({ empData, setEmpData }) {
                                                 {emp.role}
                                             </td>
                                             <td className="flex flex-col sm:flex-row justify-center gap-4 px-6 py-4 text-center">
-                                                <a href="#" onClick={() => handleEditClick(emp.id)} className="button-edit text-blue-600 hover:underline">
+                                                <a onClick={() => handleEditClick(emp.id)} className="button-edit text-blue-600 hover:underline">
                                                     <FontAwesomeIcon className="border border-gray-1000 p-1 rounded-md" icon={faEdit} />
                                                 </a>
-                                                <a href="#" onClick={() => handleDeleteClick(emp.id)} className="button-delete text-red-600 hover:underline">
+                                                <a onClick={() => handleDeleteClick(emp.id)} className="button-delete text-red-600 hover:underline">
                                                     <FontAwesomeIcon className="border border-gray-1000 p-1 rounded-md" icon={faTrash} />
                                                 </a>
                                             </td>
@@ -317,7 +338,7 @@ export default function Table({ empData, setEmpData }) {
             </div>
 
 
-            <div className="footer flex justify-between px-6 py-2 ">
+            <div className="footer flex justify-between px-6 py-2 text-sm ">
 
                 {/* SELECTED ROWS INFO */}
                 <div className="footer-info flex justify-center items-center">
@@ -328,6 +349,10 @@ export default function Table({ empData, setEmpData }) {
                 {/* NAVIGATION CONTROLS */}
                 <div className="page-navigations flex justify-center items-center my-2">
                     <div className="page-nav-buttons flex gap-2">
+
+                        {/* Current Page  */}
+                        <p className="mr-3"> Page {currentPage} of {totalPages} </p>
+
 
                         {/* Skip to the first page */}
                         <button id="jump-firstPage" disabled={currentPage === 1} onClick={handleJumpToFirstPage} className="bg-transparent hover:bg-blue-500 text-blue-700  hover:text-white  px-3 hover:border-transparent rounded"><FontAwesomeIcon icon={faFastBackward} /></button>
