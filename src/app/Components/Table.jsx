@@ -116,7 +116,7 @@ export default function Table({ empData, setEmpData }) {
     }
 
     return (
-        <div className="body-font font-poppins relative overflow-x-auto shadow-md sm:rounded-lg">
+        <div className="body-font custom-font relative overflow-x-auto shadow-md sm:rounded-lg">
 
             {isModalOpen && (
                 <Modal
@@ -143,7 +143,7 @@ export default function Table({ empData, setEmpData }) {
                     placeholder="Search"
                     value={searchTerm}
                     onChange={(e) => setSearchTerm(e.target.value)}
-                    className="searchbar block w-full px-3 py-3 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-100 focus:ring-blue-500 focus:border-blue-500"
+                    className="searchbar block w-full px-3 py-3 ps-10 text-gray-900 border border-gray-200 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500"
                 />
 
                 {/* Clear Searcbox Button  */}
@@ -155,8 +155,8 @@ export default function Table({ empData, setEmpData }) {
 
             </div>
 
-            <div>
-                <table id="dashboard-table" className="w-[98%] px-2 border mx-auto text-left rtl:text-right text-gray-500">
+            <div className="overflow-x-auto">
+                <table id="dashboard-table" className=" px-2 border mx-auto text-left  rtl:text-right text-gray-500 table-auto w-[98%]">
                     <thead id="dashboard-table-head" className="dashboard-table-head text-xs text-gray-950 uppercase bg-gray-50">
                         <tr>
                             {/* Select all checkbox */}
@@ -177,7 +177,7 @@ export default function Table({ empData, setEmpData }) {
                             </th>
 
                             {/* Table Headings  */}
-                            <th scope="col" id="header-id" className=" px-2 font-center w-1/12 "> ID </th>
+                            <th scope="col" id="header-id" className=" px-2 font-center w-1/12 text-center"> ID </th>
                             <th scope="col" className="px-6 py-3 w-3/12">
                                 Name
                             </th>
@@ -212,7 +212,7 @@ export default function Table({ empData, setEmpData }) {
                                                 <div className="flex justify-center items-center">
                                                     <input
                                                         type="checkbox"
-                                                        className="form-checkbox h-5 w-5 text-indigo-600 transition duration-150 ease-in-out"
+                                                        className=" form-checkbox h-5 w-5 text-indigo-600 transition duration-150 ease-in-out"
                                                         checked={selectedRows.includes(emp.id) || emp.id == editOnId}
                                                         onChange={(e) => {
                                                             if (e.target.checked) {
@@ -227,7 +227,7 @@ export default function Table({ empData, setEmpData }) {
                                             </td>
 
                                             {/* Employee ID  */}
-                                            <td className="px-2 font-center w-1/12">
+                                            <td className="w-1/12 mx-auto px-2 text-center">
                                                 {emp.id}
                                             </td>
 
@@ -287,7 +287,7 @@ export default function Table({ empData, setEmpData }) {
 
                                                 </div>
                                             </td>
-                                            <td className="px-2 font-medium font-center">
+                                            <td className="mx-auto px-2 text-center w-1/12">
                                                 {emp.id}
                                             </td>
                                             <td scope="row" className="px-6 py-4 font-medium  ">
