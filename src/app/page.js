@@ -7,7 +7,7 @@ import Dashboard from "./Components/Dashboard"
 
 export default function Home() {
   return (
-    <div className="wrapper px-6 py-3">
+    <div className="wrapper">
       <Dashboard />
       {/* <App /> */}
     </div>

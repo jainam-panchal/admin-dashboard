@@ -1,6 +1,7 @@
-import React, { useState } from "react"
+import React, { useRef, useState } from "react"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEdit, faTrash, faSave, faTimes, faFastForward, faFastBackward, faArrowRight, faArrowLeft } from '@fortawesome/free-solid-svg-icons';
+import Modal from "./Modal";
 
 
 export default function Table({ empData, setEmpData }) {
@@ -32,6 +33,19 @@ export default function Table({ empData, setEmpData }) {
     const indexOfFirstItem = indexOfLastItem - itemsPerPage;
     const currentItems = filteredData.slice(indexOfFirstItem, indexOfLastItem);
 
+    // to handle modal
+    const [isModalOpen, setIsModalOpen] = useState(false);
+
+    const handleDeleteSelectedClick = () => {
+        setIsModalOpen(true)
+    }
+    const handleModalConfirmDelete = () => {
+        handleMultipleDelete()
+        setIsModalOpen(false)
+    }
+    const handleModalCancel = () => {
+        setIsModalOpen(false)
+    }
 
     const handleEditDataChange = (id, parameter, value) => {
         setEditedData((oldData) => {
@@ -47,6 +61,7 @@ export default function Table({ empData, setEmpData }) {
     }
 
     const handleDeleteClick = (id) => {
+
         const updatedData = empData.filter(emp => {
 
             if (emp.id == id)
@@ -102,6 +117,41 @@ export default function Table({ empData, setEmpData }) {
 
     return (
         <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
+
+            {/* Modal */}
+            {/* {isModalOpen && (
+                <div class="relative z-10" aria-labelledby="modal-title" role="dialog" aria-modal="true">
+                    <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"></div>
+
+                    <div class="fixed inset-0 z-10 w-screen overflow-y-auto">
+                        <div class="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
+                            <div class="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg">
+                                <div class="bg-white px-4 pb-4 pt-5 sm:p-6 sm:pb-4">
+                                    <div class="sm:flex sm:items-start">
+                                        <div class="mx-auto flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full bg-red-100 sm:mx-0 sm:h-10 sm:w-10">
+                                            <svg class="h-6 w-6 text-red-600" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+                                                <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126zM12 15.75h.007v.008H12v-.008z" />
+                                            </svg>
+                                        </div>
+                                        <div class="mt-3 text-center sm:ml-4 sm:mt-0 sm:text-left">
+                                            <h3 class="text-base font-semibold leading-6 text-gray-900" id="modal-title">Multiple Delete</h3>
+                                            <div class="mt-2">
+                                                <p class="text-sm text-gray-500">Are you sure you want to delete all selected rows?</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="bg-gray-50 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
+                                    <button type="button" onClick={handleModalConfirmDelete} class="inline-flex w-full justify-center rounded-md bg-red-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-500 sm:ml-3 sm:w-auto">Delete</button>
+                                    <button type="button" onClick={handleModalCancel} class="mt-3 inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:mt-0 sm:w-auto">Cancel</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            )} */}
+
+            {isModalOpen && <Modal title={"Multiple Delete"} count={selectedRows.length} caption={"Are you sure you want to delete all selected rows?"} handleModalConfirmDelete={handleModalConfirmDelete} handleModalCancel={handleModalCancel} />}
 
             {/* Searchbox */}
             <div className="mb-2 text-sm font-medium text-gray-900 flex justify-between px-3 py-2 gap-3">
@@ -276,7 +326,7 @@ export default function Table({ empData, setEmpData }) {
                 {/* SELECTED ROWS INFO */}
                 <div className="footer-info flex justify-center items-center">
                     <p className="mr-3">{selectedRows.length} out of {filteredData.length} selected</p>
-                    <button onClick={handleMultipleDelete} className="bg-red-200 hover:bg-red-300 px-4 py-1 my-1 rounded-lg">Delete Selected</button>
+                    <button onClick={handleDeleteSelectedClick} className="inline-flex w-full justify-center rounded-md bg-red-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-500 sm:ml-3 sm:w-auto">Delete Selected</button>
                 </div>
 
                 {/* NAVIGATION CONTROLS */}
@@ -284,7 +334,7 @@ export default function Table({ empData, setEmpData }) {
                     <div className="page-nav-buttons flex gap-2">
 
                         {/* Skip to the first page */}
-                        <button id="jump-firstPage" disabled={currentPage === 1} onClick={handleJumpToFirstPage} className="text-blue-700"><FontAwesomeIcon icon={faFastBackward} /></button>
+                        <button id="jump-firstPage" disabled={currentPage === 1} onClick={handleJumpToFirstPage} className="bg-transparent hover:bg-blue-500 text-blue-700  hover:text-white  px-3 hover:border-transparent rounded"><FontAwesomeIcon icon={faFastBackward} /></button>
 
                         {/* Go to Previous page */}
                         <button id="jump-prevPage" onClick={handleJumpToPrevPage} className="prev-page bg-transparent hover:bg-blue-500 text-blue-700  hover:text-white px-3  hover:border-transparent rounded"><FontAwesomeIcon icon={faArrowLeft} />
@@ -308,7 +358,7 @@ export default function Table({ empData, setEmpData }) {
                         </button>
 
                         {/* Jump to Last Page */}
-                        <button id="jump-lastPage" disabled={currentPage === totalPages} onClick={handleJumpToLastPage} className="last-page text-blue-700"> <FontAwesomeIcon icon={faFastForward} />
+                        <button id="jump-lastPage" disabled={currentPage === totalPages} onClick={handleJumpToLastPage} className="last-page bg-transparent hover:bg-blue-500 text-blue-700  hover:text-white  px-2 hover:border-transparent rounded"> <FontAwesomeIcon icon={faFastForward} />
                         </button>
                     </div>
                 </div>
