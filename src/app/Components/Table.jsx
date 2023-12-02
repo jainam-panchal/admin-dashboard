@@ -191,8 +191,8 @@ export default function Table({ empData, setEmpData }) {
                                     Role
                                 </div>
                             </th>
-                            <th scope="col" className="px-6 py-2 w-3/12">
-                                <span className="sr-only">Actions</span>
+                            <th scope="col" className=" text-center px-6 py-2 w-3/12">
+                                <span className="">Actions</span>
                             </th>
 
                         </tr>
