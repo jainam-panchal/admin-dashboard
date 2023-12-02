@@ -192,6 +192,7 @@ export default function Table({ empData, setEmpData }) {
                                         checked={selectedRows.length == 0 ? false : 'undefined'}
                                     />
                                 </div>
+                                {console.log('Hello From jainam Panchal')}
                             </th>
 
                             {/* Table Headings  */}
