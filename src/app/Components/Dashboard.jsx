@@ -14,10 +14,9 @@ export default function Dashboard() {
         });
     }, []);
 
-    
-
     return (
-
-        <Table empData={empData} setEmpData={setEmpData}/>
+        <div>
+            <Table empData={empData} setEmpData={setEmpData} />
+        </div>
     )
 } 
