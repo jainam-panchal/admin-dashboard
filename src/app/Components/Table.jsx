@@ -250,7 +250,7 @@ export default function Table({ empData, setEmpData }) {
                                             </td>
 
 
-                                            <td className="px-6 py-4 text-center">
+                                            <td className="flex justify-center gap-4 px-6 py-4 text-center">
 
                                                 {/* SAVE BUTTON */}
                                                 <a href="#" onClick={() => handleSaveClick(emp.id)} className="button-save font-medium  text-blue-600  hover:underline"><FontAwesomeIcon className="border border-gray-1000 p-1 rounded-md" icon={faSave} /></a>
@@ -299,7 +299,7 @@ export default function Table({ empData, setEmpData }) {
                                             <td className="px-6 font-medium py-4">
                                                 {emp.role}
                                             </td>
-                                            <td className="px-6 py-4 text-center">
+                                            <td className="flex justify-center gap-4 px-6 py-4 text-center">
 
                                                 <a href="#" onClick={() => handleEditClick(emp.id)} className="button-edit font-medium text-blue-600 hover:underline d-flex justify-center items-center">
                                                     <FontAwesomeIcon className="border p-1 rounded-md" icon={faEdit} />
