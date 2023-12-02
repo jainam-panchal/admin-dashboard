@@ -116,7 +116,7 @@ export default function Table({ empData, setEmpData }) {
     }
 
     return (
-        <div className="body-font custom-font relative overflow-x-auto shadow-md sm:rounded-lg">
+        <div className="h-max custom-font relative overflow-x-auto shadow-md sm:rounded-lg">
 
             {isModalOpen && (
                 <Modal
@@ -209,10 +209,10 @@ export default function Table({ empData, setEmpData }) {
                                             <td className="w-1/12">
 
                                                 {/* Selection checkbox  */}
-                                                <div className="flex justify-center items-center">
+                                                <div className="flex m-3 justify-center items-center">
                                                     <input
                                                         type="checkbox"
-                                                        className=" form-checkbox h-5 w-5 text-indigo-600 transition duration-150 ease-in-out"
+                                                        className="form-checkbox h-5 w-5 text-indigo-600 transition duration-150 ease-in-out m-2"
                                                         checked={selectedRows.includes(emp.id) || emp.id == editOnId}
                                                         onChange={(e) => {
                                                             if (e.target.checked) {
@@ -271,7 +271,7 @@ export default function Table({ empData, setEmpData }) {
                                             <td>
 
                                                 {/* Single Select Checkbox  */}
-                                                <div className="flex justify-center items-center">
+                                                <div className="flex mx-3 justify-center items-center">
                                                     <input
                                                         type="checkbox"
                                                         className="form-checkbox h-5 w-5 text-indigo-600 transition duration-150 ease-in-out"
