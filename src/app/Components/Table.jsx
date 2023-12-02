@@ -227,7 +227,7 @@ export default function Table({ empData, setEmpData }) {
                                             </td>
 
                                             {/* Employee ID  */}
-                                            <td className="w-1/12 mx-auto px-2 text-center">
+                                            <td className="w-1/12 mx-auto px-6 text-center">
                                                 {emp.id}
                                             </td>
 
@@ -250,13 +250,13 @@ export default function Table({ empData, setEmpData }) {
                                             </td>
 
 
-                                            <td className="px-6 py-4 text-center w-3/12">
+                                            <td className="px-6 py-4 text-center">
 
                                                 {/* SAVE BUTTON */}
-                                                <a href="#" onClick={() => handleSaveClick(emp.id)} className="button-save font-medium  text-blue-600  hover:underline pr-6"><FontAwesomeIcon className="border border-gray-1000 p-1 rounded-md" icon={faSave} /></a>
+                                                <a href="#" onClick={() => handleSaveClick(emp.id)} className="button-save font-medium  text-blue-600  hover:underline"><FontAwesomeIcon className="border border-gray-1000 p-1 rounded-md" icon={faSave} /></a>
 
                                                 {/* CANCEL BUTTON */}
-                                                <a href="#" onClick={handleCancelClick} className="button-cancel font-medium text-red-600  hover:underline pl-2"><FontAwesomeIcon className="border border-gray-1000 p-1 rounded-md" icon={faTimes} /></a>
+                                                <a href="#" onClick={handleCancelClick} className="button-cancel font-medium text-red-600  hover:underline"><FontAwesomeIcon className="border border-gray-1000 p-1 rounded-md items-center" icon={faTimes} /></a>
 
                                             </td>
                                         </tr>
@@ -287,7 +287,7 @@ export default function Table({ empData, setEmpData }) {
 
                                                 </div>
                                             </td>
-                                            <td className="mx-auto px-2 text-center w-1/12">
+                                            <td className="mx-auto  text-center w-1/12">
                                                 {emp.id}
                                             </td>
                                             <td scope="row" className="px-6 py-4 font-medium  ">
@@ -301,10 +301,10 @@ export default function Table({ empData, setEmpData }) {
                                             </td>
                                             <td className="px-6 py-4 text-center">
 
-                                                <a href="#" onClick={() => handleEditClick(emp.id)} className="button-edit font-medium text-blue-600 hover:underline pr-6 d-flex justify-center items-center">
+                                                <a href="#" onClick={() => handleEditClick(emp.id)} className="button-edit font-medium text-blue-600 hover:underline d-flex justify-center items-center">
                                                     <FontAwesomeIcon className="border p-1 rounded-md" icon={faEdit} />
                                                 </a>
-                                                <a href="#" onClick={() => handleDeleteClick(emp.id)} className="button-delete font-medium text-red-600 hover:underline pl-2 d-flex justify-center items-center">
+                                                <a href="#" onClick={() => handleDeleteClick(emp.id)} className="button-delete font-medium text-red-600 hover:underline d-flex justify-center items-center">
                                                     <FontAwesomeIcon className="border p-1 rounded-md" icon={faTrash} />
                                                 </a>
                                             </td>
@@ -327,7 +327,7 @@ export default function Table({ empData, setEmpData }) {
                 </div>
 
                 {/* NAVIGATION CONTROLS */}
-                <div className="page-navigations flex justify-center my-2">
+                <div className="page-navigations flex justify-center items-center my-2">
                     <div className="page-nav-buttons flex gap-2">
 
                         {/* Skip to the first page */}
@@ -338,12 +338,12 @@ export default function Table({ empData, setEmpData }) {
                         </button>
 
                         {/* Dynamically render pages */}
-                        <div>
-                            {Array.from({ length: totalPages }, (_, i) => i + 1).map(pageNumber => (
+                        <div className="flex items-center justify-center space-x-1 md:space-x-2 overflow-hidden h-8 md:h-auto">
+                            {Array.from({ length: totalPages }, (_, i) => i + 1).map((pageNumber, index) => (
                                 <button
                                     key={pageNumber}
                                     onClick={() => selectPage(pageNumber)}
-                                    className={`w-6 rounded-full ${pageNumber === currentPage ? 'bg-blue-200 hover:bg-blue-500 ' : ''}`}
+                                    className={`w-6 h-6 flex items-center justify-center rounded-full ${pageNumber === currentPage ? 'bg-blue-200 hover:bg-blue-500 ' : ''} ${index < 3 || index >= totalPages - 3 ? '' : 'hidden md:inline-flex'}`}
                                 >
                                     {pageNumber}
                                 </button>
