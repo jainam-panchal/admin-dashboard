@@ -116,7 +116,7 @@ export default function Table({ empData, setEmpData }) {
     }
 
     return (
-        <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
+        <div className="body-font font-poppins relative overflow-x-auto shadow-md sm:rounded-lg">
 
             {isModalOpen && (
                 <Modal
@@ -147,169 +147,183 @@ export default function Table({ empData, setEmpData }) {
                 />
 
                 {/* Clear Searcbox Button  */}
-                <button onClick={() => setSearchTerm('')} type="submit" className="button-clear text-white  bottom-2.5 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2">Clear</button>
+                {/* <button onClick={() => setSearchTerm('')} type="submit" className="button-clear text-white  bottom-2.5 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2">Clear</button> */}
+
+                <div className="footer-info flex justify-center items-center">
+                    <button onClick={handleDeleteSelectedClick} className="inline-flex w-full justify-center rounded-md bg-red-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-500 sm:ml-3 sm:w-auto">Delete Selected</button>
+                </div>
 
             </div>
-            <table id="dashboard-table" className=" w-full text-sm text-left rtl:text-right text-gray-500">
-                <thead id="dashboard-table-head" className="dashboard-table-head text-xs text-gray-950 uppercase bg-gray-50">
-                    <tr>
-                        <th className="w-1/12">
-                            <div id="header-checkbox" className=" flex justify-center items-center">
-                                <input
-                                    type="checkbox"
-                                    className="form-checkbox h-5 w-5 text-indigo-600 transition duration-150 ease-in-out"
-                                    onChange={(e) => {
-                                        if (e.target.checked) {
-                                            setSelectedRows(currentItems.map(emp => emp.id));
-                                        } else {
-                                            setSelectedRows([]);
-                                        }
-                                    }}
-                                />
-                            </div>
-                        </th>
-                        <th scope="col" id="header-id" className=" px-2 font-center w-1/12 "> ID </th>
-                        <th scope="col" className="px-6 py-3 w-3/12">
-                            Name
-                        </th>
-                        <th scope="col" id="header-email" className=" px-6 py-3 w-3/12">
-                            <div className="flex items-center">
-                                Email
-                            </div>
-                        </th>
-                        <th scope="col" className="px-6 py-3 w-1/12">
-                            <div className="flex items-center">
-                                Role
-                            </div>
-                        </th>
-                        <th scope="col" className="px-6 py-2 w-3/12">
-                            <span className="sr-only">Actions</span>
-                        </th>
-                    </tr>
-                </thead>
-                <tbody className="dashboard-table-body">
-                    {
 
-                        currentItems.map(emp => {
+            <div>
+                <table id="dashboard-table" className="w-[98%] px-2 border mx-auto text-left rtl:text-right text-gray-500">
+                    <thead id="dashboard-table-head" className="dashboard-table-head text-xs text-gray-950 uppercase bg-gray-50">
+                        <tr>
+                            {/* Select all checkbox */}
+                            <th className="w-1/12">
+                                <div id="header-checkbox" className=" flex justify-center items-center">
+                                    <input
+                                        type="checkbox"
+                                        className="form-checkbox h-5 w-5 text-indigo-600 transition duration-150 ease-in-out"
+                                        onChange={(e) => {
+                                            if (e.target.checked) {
+                                                setSelectedRows(currentItems.map(emp => emp.id));
+                                            } else {
+                                                setSelectedRows([]);
+                                            }
+                                        }}
+                                    />
+                                </div>
+                            </th>
 
-                            // IF EDITING ON CURRENT COLUMN
-                            if (emp.id == editOnId)
-                                return (
-                                    <tr key={emp.id} className="border-b bg-blue-200 ">
-                                        <td className="w-1/12">
+                            {/* Table Headings  */}
+                            <th scope="col" id="header-id" className=" px-2 font-center w-1/12 "> ID </th>
+                            <th scope="col" className="px-6 py-3 w-3/12">
+                                Name
+                            </th>
+                            <th scope="col" id="header-email" className=" px-6 py-3 w-3/12">
+                                <div className="flex items-center">
+                                    Email
+                                </div>
+                            </th>
+                            <th scope="col" className="px-6 py-3 w-1/12">
+                                <div className="flex items-center">
+                                    Role
+                                </div>
+                            </th>
+                            <th scope="col" className="px-6 py-2 w-3/12">
+                                <span className="sr-only">Actions</span>
+                            </th>
 
-                                            {/* Selection checkbox  */}
-                                            <div className="flex justify-center items-center">
-                                                <input
-                                                    type="checkbox"
-                                                    className="form-checkbox h-5 w-5 text-indigo-600 transition duration-150 ease-in-out"
-                                                    checked={selectedRows.includes(emp.id) || emp.id == editOnId}
-                                                    onChange={(e) => {
-                                                        if (e.target.checked) {
-                                                            setSelectedRows(prevRows => [...prevRows, emp.id]);
-                                                        } else {
-                                                            setSelectedRows(prevRows => prevRows.filter(id => id !== emp.id));
-                                                        }
-                                                    }}
-                                                />
+                        </tr>
+                    </thead>
+                    <tbody className="dashboard-table-body">
+                        {
 
-                                            </div>
-                                        </td>
+                            currentItems.map(emp => {
 
-                                        {/* Employee ID  */}
-                                        <td className="px-2 font-center w-1/12">
-                                            {emp.id}
-                                        </td>
+                                // IF EDITING ON CURRENT COLUMN
+                                if (emp.id == editOnId)
+                                    return (
+                                        <tr key={emp.id} className="border-b bg-blue-200 ">
+                                            <td className="w-1/12">
 
-                                        {/* Employee NAME  */}
-                                        <td scope="row" className="px-6 py-4 font-medium text-gray-600  w-3/12">
-                                            <input style={{ width: '100%' }} defaultValue={emp.name} onChange={(e) => handleEditDataChange(emp.id, "name", e.target.value)} className="px-1 mx-2 border rounded-md focus:border-blue-500 focus:ring-1 focus:ring-blue-500 focus:outline-none" />
-                                        </td>
+                                                {/* Selection checkbox  */}
+                                                <div className="flex justify-center items-center">
+                                                    <input
+                                                        type="checkbox"
+                                                        className="form-checkbox h-5 w-5 text-indigo-600 transition duration-150 ease-in-out"
+                                                        checked={selectedRows.includes(emp.id) || emp.id == editOnId}
+                                                        onChange={(e) => {
+                                                            if (e.target.checked) {
+                                                                setSelectedRows(prevRows => [...prevRows, emp.id]);
+                                                            } else {
+                                                                setSelectedRows(prevRows => prevRows.filter(id => id !== emp.id));
+                                                            }
+                                                        }}
+                                                    />
 
-                                        {/* Employee EMAIL  */}
-                                        <td className="px-6 py-4 w-3/12">
-                                            <input style={{ width: '100%' }} defaultValue={emp.email} onChange={(e) => handleEditDataChange(emp.id, "email", e.target.value)} className="px-1 mx-2 border rounded-md focus:border-blue-500 focus:ring-1 focus:ring-blue-500 focus:outline-none" />
-                                        </td>
+                                                </div>
+                                            </td>
 
-                                        {/* Employee ROLE  */}
-                                        <td className="px-6 py-4 w-1/12">
-                                            <select style={{ width: '100%' }} defaultValue={emp.role} onChange={(e) => handleEditDataChange(emp.id, "role", e.target.value)} className="px-1 mx-2 border rounded-md focus:border-blue-500 focus:ring-1 focus:ring-blue-500 focus:outline-none">
-                                                <option value="admin">admin</option>
-                                                <option value="member">member</option>
-                                            </select>
-                                        </td>
+                                            {/* Employee ID  */}
+                                            <td className="px-2 font-center w-1/12">
+                                                {emp.id}
+                                            </td>
+
+                                            {/* Employee NAME  */}
+                                            <td scope="row" className="px-6 py-4 font-medium text-gray-600  w-3/12">
+                                                <input style={{ width: '100%' }} defaultValue={emp.name} onChange={(e) => handleEditDataChange(emp.id, "name", e.target.value)} className="px-1 mx-2 border rounded-md focus:border-blue-500 focus:ring-1 focus:ring-blue-500 focus:outline-none" />
+                                            </td>
+
+                                            {/* Employee EMAIL  */}
+                                            <td className="px-6 py-4 w-3/12">
+                                                <input style={{ width: '100%' }} defaultValue={emp.email} onChange={(e) => handleEditDataChange(emp.id, "email", e.target.value)} className="px-1 mx-2 border rounded-md focus:border-blue-500 focus:ring-1 focus:ring-blue-500 focus:outline-none" />
+                                            </td>
+
+                                            {/* Employee ROLE  */}
+                                            <td className="px-6 py-4 w-1/12">
+                                                <select style={{ width: '100%' }} defaultValue={emp.role} onChange={(e) => handleEditDataChange(emp.id, "role", e.target.value)} className="px-1 mx-2 border rounded-md focus:border-blue-500 focus:ring-1 focus:ring-blue-500 focus:outline-none">
+                                                    <option value="admin">admin</option>
+                                                    <option value="member">member</option>
+                                                </select>
+                                            </td>
 
 
-                                        <td className="px-6 py-4 text-center w-3/12">
+                                            <td className="px-6 py-4 text-center w-3/12">
 
-                                            {/* SAVE BUTTON */}
-                                            <a href="#" onClick={() => handleSaveClick(emp.id)} className="button-save font-medium  text-blue-600  hover:underline pr-6"><FontAwesomeIcon className="border border-gray-1000 p-1 rounded-md" icon={faSave} /></a>
+                                                {/* SAVE BUTTON */}
+                                                <a href="#" onClick={() => handleSaveClick(emp.id)} className="button-save font-medium  text-blue-600  hover:underline pr-6"><FontAwesomeIcon className="border border-gray-1000 p-1 rounded-md" icon={faSave} /></a>
 
-                                            {/* CANCEL BUTTON */}
-                                            <a href="#" onClick={handleCancelClick} className="button-cancel font-medium text-red-600  hover:underline pl-2"><FontAwesomeIcon className="border border-gray-1000 p-1 rounded-md" icon={faTimes} /></a>
+                                                {/* CANCEL BUTTON */}
+                                                <a href="#" onClick={handleCancelClick} className="button-cancel font-medium text-red-600  hover:underline pl-2"><FontAwesomeIcon className="border border-gray-1000 p-1 rounded-md" icon={faTimes} /></a>
 
-                                        </td>
-                                    </tr>
-                                )
-                            else {
+                                            </td>
+                                        </tr>
+                                    )
+                                else {
 
-                                let highLightedStyles = " border-b text-gray-600 bg-blue-200 border-b"
-                                let styles = "border-b text-gray-600 border-b"
+                                    let highLightedStyles = " border-b text-gray-600 bg-blue-200 border-b"
+                                    let styles = "border-b text-gray-600 border-b"
 
-                                return (
-                                    <tr key={emp.id} className={selectedRows.includes(emp.id) ? highLightedStyles : styles}>
-                                        <td>
-                                            <div className="flex justify-center items-center">
-                                                <input
-                                                    type="checkbox"
-                                                    className="form-checkbox h-5 w-5 text-indigo-600 transition duration-150 ease-in-out"
-                                                    checked={selectedRows.includes(emp.id)}
-                                                    onChange={(e) => {
-                                                        if (e.target.checked) {
-                                                            setSelectedRows(prevRows => [...prevRows, emp.id]);
-                                                        } else {
-                                                            setSelectedRows(prevRows => prevRows.filter(id => id !== emp.id));
-                                                        }
-                                                    }}
-                                                />
+                                    return (
+                                        <tr key={emp.id} className={selectedRows.includes(emp.id) ? highLightedStyles : styles}>
+                                            <td>
 
-                                            </div>
-                                        </td>
-                                        <td className="px-2 font-medium font-center">
-                                            {emp.id}
-                                        </td>
-                                        <td scope="row" className="px-6 py-4 font-medium  ">
-                                            {emp.name}
-                                        </td>
-                                        <td className="px-6 font-medium py-4">
-                                            {emp.email}
-                                        </td>
-                                        <td className="px-6 font-medium py-4">
-                                            {emp.role}
-                                        </td>
-                                        <td className="px-6 py-4 text-center">
+                                                {/* Single Select Checkbox  */}
+                                                <div className="flex justify-center items-center">
+                                                    <input
+                                                        type="checkbox"
+                                                        className="form-checkbox h-5 w-5 text-indigo-600 transition duration-150 ease-in-out"
+                                                        checked={selectedRows.includes(emp.id)}
+                                                        onChange={(e) => {
+                                                            if (e.target.checked) {
+                                                                setSelectedRows(prevRows => [...prevRows, emp.id]);
+                                                            } else {
+                                                                setSelectedRows(prevRows => prevRows.filter(id => id !== emp.id));
+                                                            }
+                                                        }}
+                                                    />
 
-                                            <a href="#" onClick={() => handleEditClick(emp.id)} className="button-edit font-medium text-blue-600 hover:underline pr-6 d-flex justify-center items-center">
-                                                <FontAwesomeIcon className="border p-1 rounded-md" icon={faEdit} />
-                                            </a>
-                                            <a href="#" onClick={() => handleDeleteClick(emp.id)} className="button-delete font-medium text-red-600 hover:underline pl-2 d-flex justify-center items-center">
-                                                <FontAwesomeIcon className="border p-1 rounded-md" icon={faTrash} />
-                                            </a>
-                                        </td>
-                                    </tr>
-                                )
-                            }
-                        })
-                    }
-                </tbody>
-            </table>
+                                                </div>
+                                            </td>
+                                            <td className="px-2 font-medium font-center">
+                                                {emp.id}
+                                            </td>
+                                            <td scope="row" className="px-6 py-4 font-medium  ">
+                                                {emp.name}
+                                            </td>
+                                            <td className="px-6 font-medium py-4">
+                                                {emp.email}
+                                            </td>
+                                            <td className="px-6 font-medium py-4">
+                                                {emp.role}
+                                            </td>
+                                            <td className="px-6 py-4 text-center">
+
+                                                <a href="#" onClick={() => handleEditClick(emp.id)} className="button-edit font-medium text-blue-600 hover:underline pr-6 d-flex justify-center items-center">
+                                                    <FontAwesomeIcon className="border p-1 rounded-md" icon={faEdit} />
+                                                </a>
+                                                <a href="#" onClick={() => handleDeleteClick(emp.id)} className="button-delete font-medium text-red-600 hover:underline pl-2 d-flex justify-center items-center">
+                                                    <FontAwesomeIcon className="border p-1 rounded-md" icon={faTrash} />
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    )
+                                }
+                            })
+                        }
+                    </tbody>
+                </table>
+            </div>
+
 
             <div className="footer flex justify-between px-6 py-2 ">
 
                 {/* SELECTED ROWS INFO */}
                 <div className="footer-info flex justify-center items-center">
                     <p className="mr-3">{selectedRows.length} out of {filteredData.length} selected</p>
-                    <button onClick={handleDeleteSelectedClick} className="inline-flex w-full justify-center rounded-md bg-red-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-500 sm:ml-3 sm:w-auto">Delete Selected</button>
+                    {/* <button onClick={handleDeleteSelectedClick} className="inline-flex w-full justify-center rounded-md bg-red-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-500 sm:ml-3 sm:w-auto">Delete Selected</button> */}
                 </div>
 
                 {/* NAVIGATION CONTROLS */}
